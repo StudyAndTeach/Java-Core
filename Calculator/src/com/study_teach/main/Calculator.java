@@ -14,65 +14,53 @@ import com.study_teach.main.Exceptions.CalculationError;
 public class Calculator implements CalculatorConstants {
 
 	public static void main(String[] args) {
+		
 		Scanner sc = new Scanner( System.in);
+		
 		invalid_option:
 		while(true) {
+			
+			
+			
 			Utilities.menu();
-			
-			String arg1 = sc.next();
-			String arg2 = sc.next();
 			String option = sc.next();
-			double val1 =0;
-			double val2 =0;
-			try {
-				val1 = Double.parseDouble(arg1);
-				val2 = Double.parseDouble(arg2);
-			}catch(NumberFormatException e) {
-				System.out.println(NUMBER_FORMAT_EXCPETION);
-			}catch(Exception e) {
-				System.out.println(UNKNOWN_ERROR);
-			}
-			
-	
+		
 			Calculation calculationObject = Utilities.chooseOptions(option);
 			
 			if(calculationObject == null && option.equals("5"))
 				break;
-			if(calculationObject == null)
+			if(calculationObject == null && !option.equals("5"))
 				continue invalid_option;
 			
-			if(!Utilities.isInRange(val1) && !Utilities.isInRange(val2))
-			{
-				System.out.println(ALLOWED_RANGE);
-				continue invalid_option;
-			}
 			
 			try {
 				
-				double result=0;
+				Number result=0;
 				if(calculationObject instanceof Add)
-					result = ((Add)calculationObject).calculate(val1,val2);
+					result = ((Add)calculationObject).doCalculation();
 				
 				else if(calculationObject instanceof Subtract)
-					result = ((Subtract)calculationObject).calculate(val1,val2);
+					result = ((Subtract)calculationObject).doCalculation();
 				
 				else if(calculationObject instanceof Multiply)
-					result = ((Multiply)calculationObject).calculate(val1,val2);
+					result = ((Multiply)calculationObject).doCalculation();
 				
 				else if(calculationObject instanceof Divide)
-					result = ((Divide)calculationObject).calculate(val1,val2);
+					result = ((Divide)calculationObject).doCalculation();
+					
+				System.out.println("The result is "+ result);
+				//System.out.println("The result is again "+(result == Math.floor(result)));
 				
-				System.out.println("The result is "+ Math.floor(result) +" "+result 
-				+" "+( result == Math.floor(result) ? (343) : result));
-				System.out.println("The result is again "+(result == Math.floor(result)));
-
+				
 			}catch (CalculationError e) {
-				System.out.print(e.getMessage());
+				System.out.print(e.getMessage()+"\n");
+				continue invalid_option ;
 			}
 			
 			
 		}
-	sc.close();
+		sc.close();
+		
 		
 	}
 

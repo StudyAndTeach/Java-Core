@@ -4,6 +4,6 @@ import com.study_teach.main.Exceptions.CalculationError;
 
 public interface Calculation {
 
-	public double calculate(double i, double j) throws CalculationError;
+	public Number doCalculation() throws CalculationError;
 
 }
